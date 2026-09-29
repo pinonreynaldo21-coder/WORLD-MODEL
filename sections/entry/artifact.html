@@ -33,11 +33,18 @@ svg{display:block}
 .tab{position:absolute;inset:0 0 58px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;display:none}
 .tab.on{display:block}
 #tab-home{top:62px;background:radial-gradient(130% 34% at 50% 0%,#222325 0,#0b0b0c 62%,#000 100%) no-repeat,#000}
-#tabbar{position:absolute;left:0;right:0;bottom:0;height:58px;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(18,18,20,.94);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:.5px solid #2a2a2c;z-index:3}
+#tabbar{position:absolute;left:0;right:0;bottom:0;height:58px;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(18,18,20,.94);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:.5px solid #2a2a2c;z-index:3}
 .tb{display:grid;justify-items:center;align-content:center;gap:3px;color:#8e8e93;font-size:10.5px;font-weight:500;letter-spacing:0;position:relative}
 .tb svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
 .tb.on{color:var(--blue)}
 .tb.on svg .f{fill:currentColor;stroke:currentColor}
+.tb.on svg .in{stroke:#000}
+.resic{width:64px;height:64px;margin:0 auto 12px}
+.resic circle{fill:none;stroke-width:4}
+.resic path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.bigin{flex:1;min-width:0;background:none;border:0;outline:0;font-weight:700;font-variant-numeric:tabular-nums}
+.mrow .mini{width:40px;height:25px}
+.mrow small{color:var(--t2);font-size:14px}
 .badge{position:absolute;top:3px;left:calc(50% + 7px);min-width:17px;height:17px;border-radius:9px;background:var(--red);color:#fff;font-size:11px;font-weight:600;display:grid;place-items:center;padding:0 5px}
 
 /* ---------- home header ---------- */
@@ -314,21 +321,24 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
             <div class="p-big num" id="pBig"></div>
             <button class="p-dots" data-a="menu" aria-label="Card actions"><svg viewBox="0 0 18 18"><circle cx="3" cy="9" r="1.7"/><circle cx="9" cy="9" r="1.7"/><circle cx="15" cy="9" r="1.7"/></svg></button>
             <div class="p-line num" id="pLine"></div>
-            <div class="p-row"><span>Headroom<button class="info" data-a="info" aria-label="About headroom">i</button></span><b class="num" id="pHead"></b></div>
+            <div class="p-row"><span>Available Capacity<button class="info" data-a="info" aria-label="About available capacity">i</button></span><b class="num" id="pHead"></b></div>
+            <div class="p-row"><span id="pOutL">Outlook</span><b class="num" id="pOut"></b></div>
             <div class="p-sep"></div>
-            <button class="p-link" data-a="statements">Scenarios and Activity</button>
+            <button class="p-link" data-a="statements">Statements and Activity</button>
           </section>
-          <button class="paybtn" data-a="run"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M15.2 8.6c-.5-.9-1.6-1.4-3.1-1.4-1.8 0-3 .9-3 2.2 0 3.2 6.3 1.5 6.3 4.8 0 1.4-1.3 2.3-3.2 2.3-1.6 0-2.8-.6-3.3-1.6M12 5.2v13.6"/></svg><span id="payTxt">Run Scenario</span></button>
+          <button class="paybtn" data-a="pay"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M15.2 8.6c-.5-.9-1.6-1.4-3.1-1.4-1.8 0-3 .9-3 2.2 0 3.2 6.3 1.5 6.3 4.8 0 1.4-1.3 2.3-3.2 2.3-1.6 0-2.8-.6-3.3-1.6M12 5.2v13.6"/></svg><span id="payTxt">Make Payment</span></button>
           <div id="activity" class="fadeable"></div>
         </div>
       </section>
+      <section class="tab" id="tab-pay"></section>
       <section class="tab" id="tab-blocs"></section>
       <section class="tab" id="tab-opps"></section>
       <section class="tab" id="tab-acct"></section>
       <nav id="tabbar" role="tablist">
         <button class="tb on" role="tab" data-a="tab" data-x="home" aria-selected="true"><svg viewBox="0 0 28 28"><path class="f" d="M4.5 12.8 14 4.3l9.5 8.5V24h-6.3v-6.4h-6.4V24H4.5z"/></svg>Home</button>
-        <button class="tb" role="tab" data-a="tab" data-x="blocs" aria-selected="false"><svg viewBox="0 0 28 28"><path class="f" d="M14 3.2 23.3 8.6v10.8L14 24.8l-9.3-5.4V8.6z"/><path d="m14 9.3 1.5 3.1 3.4.4-2.5 2.3.7 3.4-3.1-1.7-3.1 1.7.7-3.4-2.5-2.3 3.4-.4z" style="stroke:#8e8e93"/></svg>Blocs</button>
-        <button class="tb" role="tab" data-a="tab" data-x="opps" aria-selected="false"><svg viewBox="0 0 28 28"><path class="f" d="M8 3.5h12v12.2c0 2.6-1.4 4.6-3.6 5.7L14 22.8l-2.4-1.4C9.4 20.3 8 18.3 8 15.7z"/><path d="M4.5 18.5c2.5 3.8 5.8 5.8 9.5 5.8s7-2 9.5-5.8"/></svg>Opportunities<span class="badge" id="obadge" hidden></span></button>
+        <button class="tb" role="tab" data-a="tab" data-x="pay" aria-selected="false"><svg viewBox="0 0 28 28"><rect class="f" x="3.5" y="6.5" width="21" height="15" rx="2.6"/><path class="in" d="M3.5 11.2h21M7.5 16.8h5"/></svg>Payments</button>
+        <button class="tb" role="tab" data-a="tab" data-x="blocs" aria-selected="false"><svg viewBox="0 0 28 28"><path class="f" d="M14 3.2 23.3 8.6v10.8L14 24.8l-9.3-5.4V8.6z"/><path class="in" d="m14 9.3 1.5 3.1 3.4.4-2.5 2.3.7 3.4-3.1-1.7-3.1 1.7.7-3.4-2.5-2.3 3.4-.4z"/></svg>Blocs</button>
+        <button class="tb" role="tab" data-a="tab" data-x="opps" aria-selected="false"><svg viewBox="0 0 28 28"><path class="f" d="M8 3.5h12v12.2c0 2.6-1.4 4.6-3.6 5.7L14 22.8l-2.4-1.4C9.4 20.3 8 18.3 8 15.7z"/><path d="M4.5 18.5c2.5 3.8 5.8 5.8 9.5 5.8s7-2 9.5-5.8"/></svg>Offers<span class="badge" id="obadge" hidden></span></button>
         <button class="tb" role="tab" data-a="tab" data-x="acct" aria-selected="false"><svg viewBox="0 0 28 28"><circle class="f" cx="14" cy="9.5" r="5"/><path class="f" d="M4.5 24.5c0-5.3 4.3-8.8 9.5-8.8s9.5 3.5 9.5 8.8z"/></svg>Account</button>
       </nav>
     </div>
@@ -338,7 +348,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
     <button class="xbtn" data-a="closeSheet" aria-label="Close"><svg viewBox="0 0 16 16"><path d="M2 2l12 12M14 2 2 14"/></svg></button>
     <div id="asbody"></div>
   </div>
-  <div id="modal" role="dialog" aria-modal="true" aria-label="Run scenario"><div class="grab"></div></div>
+  <div id="modal" role="dialog" aria-modal="true" aria-label="Payment"><div class="grab"></div></div>
   <div id="pop" role="tooltip"></div>
   <div id="toast" role="status"></div>
 </div>
@@ -375,7 +385,7 @@ const weightedW=(c,w)=>{let t=0,s=0;for(let k=0;k<S.length;k++){t+=w[k]*c.m[k];s
 const base=c=>c.m?weightedW(c,PRI):null;
 const DEFAULT_WALLET=C.filter(c=>c.m).sort((a,b)=>base(b)-base(a)).map(c=>c.i);
 const KEY='wm-wallet-v2';
-let st={wallet:DEFAULT_WALLET.slice(),cur:DEFAULT_WALLET[0],scen:'weighted',w:PRI.slice(),frozen:{},tracked:{},auto:{sweep:true,alerts:true,twosrc:false},runs:[]};
+let st={wallet:DEFAULT_WALLET.slice(),cur:DEFAULT_WALLET[0],scen:'weighted',w:PRI.slice(),frozen:{},tracked:{},auto:{sweep:true,alerts:true,twosrc:false},runs:[],pays:[],autopay:{}};
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&Array.isArray(s.wallet)){st=Object.assign(st,s);st.wallet=st.wallet.filter(i=>byIso[i]);if(!st.wallet.length)st.wallet=DEFAULT_WALLET.slice();if(!byIso[st.cur])st.cur=st.wallet[0]}}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const scenIdx=id=>S.findIndex(s=>s.id===id);
@@ -523,26 +533,29 @@ function renderHome(anim){
   const c=cur();
   fade([$('#ht')],()=>{$('#hTitle').textContent=c.n;$('#hSub').textContent='\u2022\u2022\u2022\u2022'+c.i},anim);
   fade([$('#panel'),$('#activity')],()=>{
-    const v=value(c);
-    $('#pLbl').textContent=c.m?scenName(st.scen):'Outlook';
-    $('#pBig').textContent=c.m?sgn(v):'Not Scored';
-    if(c.m){const lo=Math.min(...c.m),k=c.m.indexOf(lo);$('#pLine').textContent=`${sgn(lo,0)} worst case under ${S[k].short}`;$('#pHead').textContent=sgn(3-v)}
-    else{$('#pLine').textContent=`Seed row \u00b7 ${c.r}`;$('#pHead').textContent='\u2014'}
-    $('#frozenbar').innerHTML=st.frozen[c.i]?`<div class="frozenbar">${IC.snow}<span>Assumptions frozen</span><button data-a="unfreeze">Unfreeze</button></div>`:'';
+    processDue();
+    const v=value(c),md=minDue(c),av=avail(c),sched=st.pays.filter(p=>p.iso===c.i&&p.status==='scheduled').sort((a,b)=>a.date-b.date)[0];
+    $('#pLbl').textContent='Capital Deployed';
+    $('#pBig').textContent=money(deployed(c));
+    $('#pLine').textContent=sched&&sched.auto?`AutoPay of ${money(sched.amt)} set for ${fmtD(sched.date)}`:md>0?`${money(md)} minimum due on ${fmtD(dueDate())}`:sched?`${money(sched.amt)} payment scheduled for ${fmtD(sched.date)}`:av<=0?'Capacity fully deployed':`Minimum due met for ${fmtD(dueDate())}`;
+    $('#pHead').textContent=money(av);
+    $('#pOutL').textContent='Outlook \u00b7 '+scenShort(st.scen);
+    $('#pOut').textContent=c.m?sgn(v):'Not scored';
+    $('#frozenbar').innerHTML=st.frozen[c.i]?`<div class="frozenbar">${IC.snow}<span>Card frozen. Payments are blocked.</span><button data-a="unfreeze">Unfreeze</button></div>`:'';
     renderActivity(c);
   },anim);
   $$('.card',rail).forEach((el,k)=>el.classList.toggle('frozen',!!st.frozen[st.wallet[k]]));
 }
 function when(t){const d=new Date(t);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})+', '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'})}
 function activityRows(c,limit){
-  const rows=[];
+  const rows=st.pays.filter(p=>p.iso===c.i).sort((a,b)=>b.date-a.date).map(p=>payRow(p,0));
   if(c.m)st.runs.forEach(r=>{const v=r.s==='weighted'?weighted(c):c.m[scenIdx(r.s)];rows.push(`<button class="cell" data-a="scen" data-x="${r.s}"><div class="main"><div class="t">Scenario run \u00b7 ${esc(scenShort(r.s))}</div><div class="s">${when(r.t)}</div></div><div class="v num">${sgn(v)}</div></button>`)});
   projectsOf(c).forEach(p=>rows.push(`<button class="cell" data-a="project" data-x="${p.k}"><div class="main"><div class="t">${esc(p.name)}</div><div class="s">${esc(cap(p.stage))}</div></div><div class="v num">${p.prob?p.prob+'%<small>execution</small>':esc(cap(p.maturity||''))+'<small>maturity</small>'}</div></button>`));
   return limit?rows.slice(0,limit):rows;
 }
 function renderActivity(c){
   const rows=activityRows(c,6),el=$('#activity');
-  if(!rows.length){el.innerHTML=`<div class="empty"><div class="ig">i</div><h3>No Recent Activity</h3><p>${c.m?'No projects are logged for '+esc(c.n)+' yet. Scenario runs will appear here.':'Seed row with no research yet. Add sources to start scoring.'}</p></div>`;return}
+  if(!rows.length){el.innerHTML=`<div class="empty"><div class="ig">i</div><h3>No Recent Activity</h3><p>${c.m?'Payments, scenario runs and projects for '+esc(c.n)+' will appear here.':'Seed row with no research yet. Payments you make will appear here.'}</p></div>`;return}
   el.innerHTML=`<div class="sec-h"><h3>Recent Activity</h3><button data-a="statements">See All</button></div><div class="group">${rows.join('')}</div>`;
 }
 
@@ -588,11 +601,13 @@ let tt=0;function toast(msg){const t=$('#toast');t.innerHTML=IC.check.replace('<
 /* ---------------- screens ---------------- */
 function cellRow(t,v,opt={}){return `<${opt.a?'button':'div'} class="cell"${opt.a?` data-a="${opt.a}" data-x="${esc(opt.x||'')}"`:''}><div class="main"><div class="t${opt.wrap?' wrap':''}">${t}</div>${opt.s?`<div class="s${opt.swrap?' wrap':''}">${opt.s}</div>`:''}</div>${v!=null?`<div class="v${opt.dim?' dim':''} num">${v}</div>`:''}${opt.a?IC.chev:''}</${opt.a?'button':'div'}>`}
 function statementsScreen(tab='activity'){
-  const c=cur();const el=screen('Scenarios and Activity',`<div class="segc" id="seg"><button data-a="seg" data-x="activity" aria-pressed="${tab==='activity'}">Activity</button><button data-a="seg" data-x="scen" aria-pressed="${tab==='scen'}">Scenarios</button></div><div id="segbody"></div>`);
+  const c=cur();const el=screen('Statements and Activity',`<div class="segc" id="seg"><button data-a="seg" data-x="activity" aria-pressed="${tab==='activity'}">Activity</button><button data-a="seg" data-x="stmt" aria-pressed="${tab==='stmt'}">Statements</button><button data-a="seg" data-x="scen" aria-pressed="${tab==='scen'}">Scenarios</button></div><div id="segbody"></div>`);
   el.dataset.kind='statements';push(el);segFill(el,tab);
 }
 function segFill(el,tab){const c=cur(),b=$('#segbody',el);$$('#seg button',el).forEach(x=>x.setAttribute('aria-pressed',x.dataset.x===tab));
   if(tab==='activity'){const rows=activityRows(c);b.innerHTML=rows.length?`<div class="gh">${esc(c.n)}</div><div class="group">${rows.join('')}</div><div class="gf">Execution odds are the model\u2019s subjective probability that a project delivers as planned.</div>`:`<div class="empty"><div class="ig">i</div><h3>No Recent Activity</h3><p>Nothing logged for ${esc(c.n)} yet.</p></div>`}
+  else if(tab==='stmt'){const by={};st.pays.filter(p=>p.iso===c.i&&p.status==='posted').forEach(p=>{const d=new Date(p.date),k=d.getFullYear()*100+d.getMonth();(by[k]=by[k]||[]).push(p)});const ks=Object.keys(by).sort((a,b)=>b-a);
+    b.innerHTML=ks.length?`<div class="gh">${esc(c.n)} \u00b7 \u2022\u2022\u2022\u2022${c.i}</div><div class="group">${ks.map(k=>{const d=new Date(Math.floor(k/100),k%100,1);return cellRow(d.toLocaleDateString('en-US',{month:'long',year:'numeric'}),'\u2212'+money(sumP(by[k])),{s:by[k].length+' payment'+(by[k].length>1?'s':''),dim:1})}).join('')}</div><div class="gf">Statements close on the 16th. Capacity is set by the outlook in the scenario you are viewing.</div>`:`<div class="empty"><div class="ig">i</div><h3>No Statements Yet</h3><p>Statements appear after your first payment to ${esc(c.n)}.</p></div>`}
   else{b.innerHTML=c.m?`<div class="gh">Impact on ${esc(c.n)}, \u22123 to +3</div><div class="group">${S.map((s,k)=>cellRow(esc(s.name),`<span class="${cls(c.m[k])}">${sgn(c.m[k],0)}</span>`,{s:`Prior ${s.prior}%`,a:'scen',x:s.id})).join('')}</div><div class="gf">Priors are subjective analyst probabilities from the model package, dated ${D.asOf}.</div>`:`<div class="empty"><div class="ig">i</div><h3>Not Scored</h3><p>${esc(c.n)} has no scenario impacts yet.</p></div>`}}
 function projectScreen(k){const p=P[k];
   const rows=[['Country',esc(p.c)],['Type',p.kind],['Domain',esc(cap(p.domain))],['Stage',esc(cap(p.stage))]];if(p.scale)rows.push(['Scale',esc(p.scale)]);if(p.maturity)rows.push(['Maturity',esc(cap(p.maturity))]);
@@ -614,20 +629,117 @@ function scenarioScreen(id){
 const pct=w=>{const t=w.reduce((a,b)=>a+b,0)||1;return w.map(v=>Math.round(v/t*100))};
 
 function manageScreen(){const c=cur(),t=tier(c);const blocs=D.blocs.filter(b=>b.core.includes(c.n)||b.bridge.includes(c.n));
-  push(screen('Manage Country',`<div style="display:flex;gap:14px;align-items:center;padding:20px 4px 4px"><div class="mini" style="width:74px;height:47px;border-radius:5px;background-image:${tex(t)}"></div><div><div style="font-size:20px;font-weight:700">${esc(c.n)}</div><div style="color:var(--t2);font-size:14px;margin-top:2px">${TIERNAME[t]} \u00b7 \u2022\u2022\u2022\u2022${c.i}</div></div></div>
+  push(screen('Manage Account',`<div style="display:flex;gap:14px;align-items:center;padding:20px 4px 4px"><div class="mini" style="width:74px;height:47px;border-radius:5px;background-image:${tex(t)}"></div><div><div style="font-size:20px;font-weight:700">${esc(c.n)}</div><div style="color:var(--t2);font-size:14px;margin-top:2px">${TIERNAME[t]} \u00b7 \u2022\u2022\u2022\u2022${c.i}</div></div></div>
+  <div class="gh">Account</div><div class="group">${cellRow('Capacity',money(capOf(c)),{dim:1,s:'Under '+esc(scenShort(st.scen))})}${cellRow('Capital deployed',money(deployed(c)),{dim:1})}${cellRow('Statements and Activity',null,{a:'statements'})}${cellRow('Manage AutoPay',st.autopay[c.i]?'On':'Off',{a:'autopayCur',dim:1})}${cellRow('Run Scenario',esc(scenShort(st.scen)),{a:'run',dim:1})}</div>
   <div class="gh">Details</div><div class="group">${cellRow('Region',esc(c.r),{dim:1})}${cellRow('ISO code',c.i,{dim:1})}${cellRow('Card tier',TIERNAME[t],{dim:1,s:TIERDESC[t]})}${c.m?cellRow('Scenario range',`${sgn(Math.min(...c.m),0)} to ${sgn(Math.max(...c.m),0)}`,{dim:1}):''}</div>
   ${c.t?`<div class="gh">Base-case thesis</div><div class="para">${esc(c.t)}</div>`:''}
   <div class="gh">Influence blocs</div><div class="group">${blocs.length?blocs.map(b=>cellRow(esc(b.name),null,{s:b.core.includes(c.n)?'Core member':'Bridge node',a:'bloc',x:b.id,wrap:1})).join(''):cellRow('No bloc membership recorded',null)}</div>
-  <div class="gh">Scoring</div><div class="group">${cellRow('Scenario Weights',null,{a:'weights'})}<div class="cell"><div class="main"><div class="t">Freeze Assumptions</div></div><button class="sw" role="switch" aria-label="Freeze assumptions" aria-checked="${!!st.frozen[c.i]}" data-a="freezeToggle"></button></div></div>
+  <div class="gh">Scoring</div><div class="group">${cellRow('Scenario Weights',null,{a:'weights'})}<div class="cell"><div class="main"><div class="t">Freeze Card</div></div><button class="sw" role="switch" aria-label="Freeze card" aria-checked="${!!st.frozen[c.i]}" data-a="freezeToggle"></button></div></div>
   ${DEFAULT_WALLET.includes(c.i)?'':`<div class="group" style="margin-top:28px"><button class="cell" data-a="removeCountry"><div class="main"><div class="t danger">Remove from Wallet</div></div></button></div>`}`))}
 function weightsScreen(){const el=screen('Scenario Weights',`<div class="gf" style="padding:16px 4px 0">Weights blend the five futures into each country\u2019s outlook. Frozen countries keep the weights they had when frozen.</div><div id="wl"></div><div style="margin-top:24px"><button class="plain" data-a="resetw">Reset to Package Priors</button></div>`);
   push(el);fillWeights(el)}
 function fillWeights(el){const p=pct(st.w);$('#wl',el).innerHTML=S.map((s,k)=>`<div class="gh" style="display:flex;justify-content:space-between"><span>${esc(s.short)}</span><span class="num" id="wp${k}">${p[k]}%</span></div><div class="group"><div class="cell" style="display:block;padding:6px 16px 8px"><input type="range" id="w${k}" min="0" max="60" step="1" value="${st.w[k]}" data-k="${k}" aria-label="${esc(s.name)} weight" style="--p:${st.w[k]/60*100}%"><div class="s" style="white-space:normal">${esc(s.desc)}</div></div></div>`).join('');
   $$('input[type=range]',el).forEach(r=>r.addEventListener('input',()=>{const k=+r.dataset.k;st.w[k]=+r.value;r.style.setProperty('--p',(r.value/60*100)+'%');const q=pct(st.w);S.forEach((_,j)=>{const o=$('#wp'+j,el);if(o)o.textContent=q[j]+'%'});save();renderHome(false)}))}
-function powerScreen(){const c=cur();
-  const el=screen('Check Scenario Power',`<div style="padding:22px 4px 2px"><div style="font-size:24px;font-weight:700;letter-spacing:-.01em">How does ${esc(c.n)} hold up?</div><div style="color:var(--t2);font-size:15px;margin-top:6px;line-height:1.4">Pick a future to see whether this country gains or loses ground in it.</div></div>
-  ${c.m?`<div class="gh">Choose a future</div><div class="group" id="pw">${S.map((s,k)=>`<button class="cell" role="radio" aria-checked="${k===0}" data-a="pwPick" data-x="${k}"><span class="radio"></span><div class="main"><div class="t">${esc(s.name)}</div><div class="s">Prior ${s.prior}%</div></div></button>`).join('')}</div>
-  <div style="margin-top:20px"><button class="primary" data-a="pwCheck">Check</button></div><div id="pwr"></div>`:`<div class="empty"><div class="ig">i</div><h3>Not Scored</h3><p>${esc(c.n)} has no scenario impacts yet.</p></div>`}`,{navTitle:'Scenario Power'});push(el)}
+/* ---------------- payments: a simulated capital fund, never real money ---------------- */
+const FUND0=5000,r2=v=>Math.round(v*100)/100;
+const money=v=>'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'M';
+const sod=t=>{const d=new Date(t);d.setHours(0,0,0,0);return d.getTime()};
+const addDays=(t,n)=>{const d=new Date(t);d.setDate(d.getDate()+n);return sod(d)};
+const fmtD=t=>new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const fmtDL=t=>new Date(t).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+function dueDate(){const n=new Date(),d=new Date(n.getFullYear(),n.getMonth(),16);if(n.getDate()>16)d.setMonth(d.getMonth()+1);return d.getTime()}
+function cycleStart(){const d=new Date(dueDate());d.setMonth(d.getMonth()-1);d.setDate(17);return d.getTime()}
+function capOf(c){const v=value(c);return r2(50*((v==null?0:v)+3))}
+const sumP=a=>r2(a.reduce((t,p)=>t+p.amt,0));
+const livePays=()=>st.pays.filter(p=>p.status!=='canceled');
+const deployed=c=>sumP(st.pays.filter(p=>p.iso===c.i&&p.status==='posted'));
+const scheduledFor=c=>sumP(st.pays.filter(p=>p.iso===c.i&&p.status==='scheduled'));
+const avail=c=>Math.max(0,r2(capOf(c)-deployed(c)-scheduledFor(c)));
+const fundAvail=()=>Math.max(0,r2(FUND0-sumP(livePays())));
+function minDue(c){const m=r2(capOf(c)*.02),paid=sumP(livePays().filter(p=>p.iso===c.i&&p.date>=cycleStart()));return Math.max(0,Math.min(r2(m-paid),avail(c)))}
+const confNo=()=>'WM'+Math.random().toString(36).slice(2,6).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase();
+function mkPay(iso,amt,date,apply,auto){return{id:confNo(),iso,amt:r2(amt),date,created:Date.now(),status:date<=Date.now()?'posted':'scheduled',apply,auto:!!auto}}
+function processDue(){const now=Date.now();let ch=false;
+  st.pays.forEach(p=>{if(p.status==='scheduled'&&p.date<=now){p.status='posted';ch=true}});
+  const due=dueDate();
+  for(const iso in st.autopay){const c=byIso[iso];if(!c||st.frozen[iso])continue;
+    if(!st.pays.some(p=>p.iso===iso&&p.auto&&p.date===due)){const a=st.autopay[iso].mode==='full'?avail(c):minDue(c);if(a>0&&a<=fundAvail()){st.pays.push(mkPay(iso,a,due,'General capacity',true));ch=true}}}
+  if(ch)save()}
+function payRow(p,showCountry){const c=byIso[p.iso];
+  const t=p.status==='posted'?'Payment Received – Thank You':p.status==='scheduled'?(p.auto?'AutoPay Scheduled':'Scheduled Payment'):'Canceled Payment';
+  return `<button class="cell" data-a="payment" data-x="${p.id}"><div class="main"><div class="t">${t}</div><div class="s">${showCountry?esc(c.n)+' · ':''}${p.status==='scheduled'?'Scheduled for '+fmtD(p.date):fmtD(p.date)}</div></div><div class="v num ${p.status==='posted'?'pos':'zero'}"${p.status==='canceled'?' style="text-decoration:line-through"':''}>−${money(p.amt)}</div></button>`}
+const FUNDIC='<span class="lic"><svg viewBox="0 0 30 30"><path d="M4 11.5 15 5l11 6.5z"/><path d="M7 14v8M12 14v8M18 14v8M23 14v8M4 25.5h22"/></svg></span>';
+const BACKBTN=`<button data-a="mback" style="display:flex;align-items:center;gap:4px;padding-left:8px">${IC.back.replace('<svg','<svg style="width:12px;height:20px;stroke:currentColor;stroke-width:2.6;fill:none"')}Back</button>`;
+
+let pd=null;
+function openPay(iso){const c=byIso[iso];
+  if(st.frozen[iso]){openSheet(`<div class="confirm"><div class="cic">${IC.snow}</div><h3>This card is frozen</h3><p>Unfreeze the ${esc(c.n)} card to make a payment.</p><button class="primary" data-a="unfreezeIso" data-x="${iso}">Unfreeze Card</button><button class="plain" data-a="closeSheet">Cancel</button></div>`);return}
+  processDue();pd={iso,opt:minDue(c)>0?'min':'avail',other:'',date:Date.now(),apply:'General capacity'};openModal(payPage1());wirePay(mpages[0])}
+function payAmt(){const c=byIso[pd.iso];return pd.opt==='min'?minDue(c):pd.opt==='avail'?avail(c):r2(parseFloat(pd.other)||0)}
+function payErr(){const c=byIso[pd.iso],a=payAmt();if(!(a>0))return pd.opt==='other'?'Enter an amount.':pd.opt==='min'?'Nothing is due this cycle.':'No capacity left on this card.';
+  if(a>avail(c))return `This is more than the available capacity of ${money(avail(c))}.`;if(a>fundAvail())return `This is more than the fund balance of ${money(fundAvail())}.`;return ''}
+function payPage1(){const c=byIso[pd.iso];
+  const opt=(k,t,v)=>`<button class="cell" role="radio" aria-checked="${pd.opt===k}" data-a="payOpt" data-x="${k}"><span class="radio"></span><div class="main"><div class="t">${t}</div></div><div class="v num">${v}</div></button>`;
+  return `<div class="mnav"><button data-a="cancel">Cancel</button><h2>Make Payment</h2><span></span></div><div class="mbody">
+  <div class="gh">Pay to</div><div class="group"><div class="cell"><div class="mini" style="background-image:${tex(tier(c))}"></div><div class="main"><div class="t">${esc(c.n)}</div><div class="s">••••${c.i} · Capacity ${money(capOf(c))}</div></div></div></div>
+  <div class="gh">Amount</div><div class="group">${opt('min','Minimum Due',money(minDue(c)))}${opt('avail','Remaining Capacity',money(avail(c)))}${opt('other','Other Amount','')}${pd.opt==='other'?`<div class="cell"><span style="font-size:28px;font-weight:700">$</span><input id="payOther" class="bigin" style="font-size:28px" inputmode="decimal" autocomplete="off" placeholder="0.00" value="${esc(pd.other)}" aria-label="Amount in millions"><span style="color:var(--t2);font-size:16px">million</span></div>`:''}</div>
+  <div class="gf" id="payErr" style="color:var(--red)"></div>
+  <div class="gh">Pay from</div><div class="group"><div class="cell">${FUNDIC}<div class="main"><div class="t">World Model Fund</div><div class="s">••••2026 · Available ${money(fundAvail())}</div></div></div></div>
+  <div class="gh">Payment date</div><div class="group"><button class="cell" data-a="payDate"><div class="main"><div class="t">${sod(pd.date)===sod(Date.now())?'Today':fmtDL(pd.date)}</div>${sod(pd.date)===sod(dueDate())?'<div class="s">Due date</div>':''}</div><div class="v dim">${fmtD(pd.date)}</div>${IC.chev}</button></div>
+  <div class="gh">Apply to</div><div class="group"><button class="cell" data-a="payApply"><div class="main"><div class="t">${esc(pd.apply)}</div></div>${IC.chev}</button></div>
+  <div class="gf">Simulated capital for modeling. No real money moves.</div></div>
+  <div class="mfoot"><button class="primary" data-a="payCont" id="payCont">Continue</button></div>`}
+function wirePay(pg){const i=$('#payOther',pg);if(i)i.addEventListener('input',()=>{pd.other=i.value.replace(/[^0-9.]/g,'');if(i.value!==pd.other)i.value=pd.other;payFoot(pg)});payFoot(pg)}
+function payFoot(pg){const e=payErr();$('#payCont',pg).disabled=!!e;$('#payErr',pg).textContent=pd.opt==='other'&&!pd.other?'':e}
+function payRefresh(){const pg=mpages[0];pg.innerHTML=payPage1();wirePay(pg)}
+function payDatePage(){const t0=sod(Date.now()),due=sod(dueDate()),days=[];for(let i=0;i<=40;i++)days.push(addDays(t0,i));
+  return `<div class="mnav">${BACKBTN}<h2>Payment Date</h2><span></span></div><div class="mbody"><div style="height:14px"></div><div class="group">${days.map(d=>`<button class="cell" role="radio" aria-checked="${sod(pd.date)===d}" data-a="payDatePick" data-x="${d}"><span class="radio"></span><div class="main"><div class="t">${d===t0?'Today':fmtDL(d)}</div>${d===due?'<div class="s">Due date</div>':''}</div></button>`).join('')}</div></div>`}
+function payApplyPage(){const c=byIso[pd.iso],opts=[['General capacity','Spread across the card']].concat(projectsOf(c).map(p=>[p.name,(st.tracked[p.k]?'Added offer · ':'')+cap(p.domain)]));
+  return `<div class="mnav">${BACKBTN}<h2>Apply To</h2><span></span></div><div class="mbody"><div style="height:14px"></div><div class="group">${opts.map(o=>`<button class="cell" role="radio" aria-checked="${pd.apply===o[0]}" data-a="payApplyPick" data-x="${esc(o[0])}"><span class="radio"></span><div class="main"><div class="t">${esc(o[0])}</div><div class="s">${esc(o[1])}</div></div></button>`).join('')}</div>${opts.length<2?'<div class="gf">No projects are logged for this country yet.</div>':''}</div>`}
+function payPage2(){const c=byIso[pd.iso],a=payAmt(),today=sod(pd.date)===sod(Date.now());
+  return `<div class="mnav">${BACKBTN}<h2>Review</h2><span></span></div><div class="mbody">
+  <div class="hero"><div class="amt num">${money(a)}</div><div class="who">${esc(c.n)}</div><div class="when">${today?'Pays today':'Scheduled for '+fmtDL(pd.date)}</div></div>
+  <div class="group">${cellRow('Pay to',esc(c.n)+' ••••'+c.i,{dim:1})}${cellRow('Pay from','World Model Fund',{dim:1})}${cellRow('Payment date',today?'Today':fmtDL(pd.date),{dim:1})}${cellRow('Apply to',esc(pd.apply),{dim:1})}${cellRow('Capacity after',money(avail(c)-a),{dim:1})}${cellRow('Fund after',money(fundAvail()-a),{dim:1})}</div>
+  <div class="gf">By submitting you deploy simulated capital from the World Model Fund. No real money moves.</div></div>
+  <div class="mfoot"><button class="primary" data-a="paySubmit" id="paySub">Submit Payment</button></div>`}
+function payDone(p){const c=byIso[p.iso],posted=p.status==='posted';
+  return `<div class="mnav"><span></span><h2></h2><span></span></div><div class="mbody" style="text-align:center">${IC.okmark}<div style="font-size:26px;font-weight:700">${posted?'Thank You':'Payment Scheduled'}</div>
+  <div style="color:var(--t2);font-size:15px;margin:8px 20px 0;line-height:1.45">Your payment of ${money(p.amt)} to ${esc(c.n)} ${posted?'was received.':'is scheduled for '+fmtDL(p.date)+'.'}</div>
+  <div class="group" style="margin-top:28px;text-align:left">${cellRow('Confirmation number',p.id,{dim:1})}${cellRow('Available capacity',money(avail(c)),{dim:1})}</div></div>
+  <div class="mfoot"><button class="primary" data-a="payFinish">Done</button></div>`}
+function paymentScreen(id){const p=st.pays.find(x=>x.id===id);if(!p)return;const c=byIso[p.iso],lab=p.status==='posted'?'Received':p.status==='scheduled'?'Scheduled':'Canceled';
+  push(screen('Payment',`<div class="hero"><div class="amt num">${money(p.amt)}</div><div class="who">${esc(c.n)}</div><div class="when">${lab} · ${fmtDL(p.date)}</div></div>
+  <div class="group">${cellRow('Status',lab,{dim:1})}${cellRow('Pay to',esc(c.n)+' ••••'+c.i,{dim:1})}${cellRow('Pay from','World Model Fund',{dim:1})}${cellRow('Apply to',esc(p.apply),{dim:1})}${cellRow('Type',p.auto?'AutoPay':'One-time',{dim:1})}${cellRow('Confirmation number',p.id,{dim:1})}${cellRow('Submitted',when(p.created),{dim:1})}</div>
+  ${p.status==='scheduled'?`<div class="group" style="margin-top:28px"><button class="cell" data-a="payCancelAsk" data-x="${p.id}" style="justify-content:center"><div class="t danger">Cancel Payment</div></button></div>`:''}`,{navTitle:'Payment Details'}))}
+function spendScreen(){const c=cur();
+  push(screen('Check Spending Power',`<div style="padding:22px 4px 4px"><div style="font-size:24px;font-weight:700;letter-spacing:-.01em">Check Spending Power</div><div style="color:var(--t2);font-size:15px;margin-top:6px;line-height:1.4">Enter an amount to see whether ${esc(c.n)} can take it. Checking does not change your capacity.</div></div>
+  <div class="group" style="margin-top:16px"><div class="cell" style="padding:16px"><span style="font-size:34px;font-weight:700">$</span><input id="spAmt" class="bigin" style="font-size:34px" inputmode="decimal" autocomplete="off" placeholder="0.00" aria-label="Amount in millions"><span style="color:var(--t2);font-size:16px">million</span></div></div>
+  <div style="margin-top:18px"><button class="primary" data-a="spCheck">Check</button></div><div id="spr"></div>`,{navTitle:'Spending Power'}))}
+function spResult(c,amt){const av=avail(c),ok=amt<=av,col=ok?'var(--green)':'var(--red)';
+  return `<div class="group" style="margin-top:22px"><div style="text-align:center;padding:24px 18px 20px"><svg class="resic" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" style="stroke:${col}"/><path d="${ok?'M20 33l8 8 17-18':'M23 23l18 18M41 23 23 41'}" style="stroke:${col}"/></svg>
+  <div style="font-size:21px;font-weight:700">${ok?'Likely Approved':'Likely Declined'}</div>
+  <div style="color:var(--t2);font-size:15px;margin-top:6px;line-height:1.4">${ok?`${money(amt)} fits within ${esc(c.n)}’s available capacity of ${money(av)} under ${esc(scenShort(st.scen))}.`:`${money(amt)} is ${money(amt-av)} over ${esc(c.n)}’s available capacity of ${money(av)} under ${esc(scenShort(st.scen))}.`}</div></div></div>
+  <div class="gh">In each future</div><div class="group">${S.map((s,k)=>{const a=Math.max(0,r2(50*((c.m?c.m[k]:0)+3)-deployed(c)-scheduledFor(c))),y=amt<=a;return cellRow(esc(s.short),`<span class="${y?'pos':'neg'}">${y?'Approved':'Declined'}</span>`,{s:'Capacity '+money(a)})}).join('')}</div>`}
+function autopayScreen(iso){const el=screen('Manage AutoPay','',{navTitle:'AutoPay'});el.dataset.iso=iso||st.cur;push(el);fillAutopay(el)}
+function fillAutopay(el){const c=byIso[el.dataset.iso],ap=st.autopay[c.i],sched=st.pays.find(p=>p.iso===c.i&&p.auto&&p.status==='scheduled');
+  $('.scr-body',el).innerHTML=`<div style="display:flex;gap:14px;align-items:center;padding:20px 4px 4px"><div class="mini" style="width:64px;height:40px;background-image:${tex(tier(c))}"></div><div><div style="font-size:20px;font-weight:700">${esc(c.n)}</div><div style="color:var(--t2);font-size:14px;margin-top:2px">••••${c.i}</div></div></div>
+  <div class="gf" style="padding:10px 4px 0">Pay this card automatically on the 16th of each month from the World Model Fund.</div>
+  <div class="group" style="margin-top:14px"><div class="cell"><div class="main"><div class="t">AutoPay</div><div class="s">${ap?'On':'Off'}${st.frozen[c.i]?' · paused while card is frozen':''}</div></div><button class="sw" role="switch" aria-label="AutoPay" aria-checked="${!!ap}" data-a="apToggle"></button></div></div>
+  ${ap?`<div class="gh">Amount</div><div class="group">${[['min','Minimum Due','2% of capacity each month'],['full','Remaining Capacity','Everything still available']].map(o=>`<button class="cell" role="radio" aria-checked="${ap.mode===o[0]}" data-a="apMode" data-x="${o[0]}"><span class="radio"></span><div class="main"><div class="t">${o[1]}</div><div class="s">${o[2]}</div></div></button>`).join('')}</div>
+  <div class="gh">Pay from</div><div class="group"><div class="cell">${FUNDIC}<div class="main"><div class="t">World Model Fund</div><div class="s">Available ${money(fundAvail())}</div></div></div></div>
+  <div class="gh">Next payment</div><div class="group">${sched?cellRow(money(sched.amt),fmtDL(sched.date),{a:'payment',x:sched.id,dim:1}):cellRow('Nothing due this cycle',fmtD(dueDate()),{dim:1})}</div>
+  <div class="gf">To skip one month, open the scheduled payment and cancel it.</div>`:''}`}
+function renderPay(){processDue();const all=st.pays.slice().sort((a,b)=>b.date-a.date),sch=all.filter(p=>p.status==='scheduled').reverse(),hist=all.filter(p=>p.status!=='scheduled'),aps=Object.keys(st.autopay).filter(i=>byIso[i]);
+  $('#tab-pay').innerHTML=`<div class="tabhead">Payments</div><div class="tabpad">
+  <section class="panel"><div class="p-lbl">World Model Fund</div><div class="p-big num">${money(fundAvail())}</div><div class="p-line">Available of ${money(FUND0)} starting fund</div>
+  <div class="p-row"><span>Deployed</span><b class="num">${money(sumP(all.filter(p=>p.status==='posted')))}</b></div><div class="p-row"><span>Scheduled</span><b class="num">${money(sumP(sch))}</b></div><div class="p-sep"></div><button class="p-link" data-a="payHistory">Payment Activity</button></section>
+  <button class="paybtn" data-a="payPick"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M15.2 8.6c-.5-.9-1.6-1.4-3.1-1.4-1.8 0-3 .9-3 2.2 0 3.2 6.3 1.5 6.3 4.8 0 1.4-1.3 2.3-3.2 2.3-1.6 0-2.8-.6-3.3-1.6M12 5.2v13.6"/></svg><span>Make a Payment</span></button>
+  <div class="sec-h"><h3>Scheduled</h3></div>${sch.length?`<div class="group">${sch.map(p=>payRow(p,1)).join('')}</div>`:`<div class="group">${cellRow('No scheduled payments',null,{dim:1})}</div>`}
+  <div class="sec-h"><h3>AutoPay</h3></div><div class="group">${aps.map(i=>{const c=byIso[i];return `<button class="cell" data-a="apOpen" data-x="${i}"><div class="mini" style="background-image:${tex(tier(c))}"></div><div class="main"><div class="t">${esc(c.n)}</div><div class="s">${st.autopay[i].mode==='full'?'Remaining capacity':'Minimum due'} · 16th of each month</div></div>${IC.chev}</button>`}).join('')}${aps.includes(st.cur)?'':`<button class="cell" data-a="apOpen" data-x="${st.cur}"><div class="main"><div class="t" style="color:var(--blue)">Set Up AutoPay for ${esc(cur().n)}</div></div>${IC.chev}</button>`}</div>
+  <div class="sec-h"><h3>Recent Payments</h3>${hist.length>6?'<button data-a="payHistory">See All</button>':''}</div>${hist.length?`<div class="group">${hist.slice(0,6).map(p=>payRow(p,1)).join('')}</div>`:`<div class="empty" style="padding-top:18px"><div class="ig">i</div><h3>No Payments Yet</h3><p>Payments you make to any country card appear here.</p></div>`}
+  <div class="gf" style="margin-top:16px">Simulated capital for modeling. No real money moves and no bank details are used.</div></div>`}
+function refreshAfterPay(){renderHome(false);if(tabNow==='pay')renderPay();if(tabNow==='acct')renderAcct()}
+
 const VERD={3:'Strong beneficiary',2:'Clear beneficiary',1:'Mild beneficiary',0:'Neutral','-1':'Mild loser','-2':'Clear loser','-3':'Severe loser'};
 function gauge(v){const a=Math.PI*(1-(v+3)/6),R=80,cx=95,cy=95,px=cx+R*Math.cos(a),py=cy-R*Math.sin(a),col=v>0?'var(--green)':v<0?'var(--red)':'#8e8e93';
   return `<svg viewBox="0 0 190 112"><path d="M15 95a80 80 0 0 1 160 0" fill="none" stroke="#3a3a3c" stroke-width="10" stroke-linecap="round"/><path d="M15 95A80 80 0 0 1 ${px.toFixed(1)} ${py.toFixed(1)}" fill="none" stroke="${col}" stroke-width="10" stroke-linecap="round"/><circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="8" fill="#fff"/><text x="15" y="110" fill="#8e8e93" font-size="10" text-anchor="middle">\u22123</text><text x="175" y="110" fill="#8e8e93" font-size="10" text-anchor="middle">+3</text></svg>`}
@@ -689,13 +801,14 @@ function blocScreen(id){const b=D.blocs.find(x=>x.id===id);const mem=n=>byName[n
   <div class="gh">Vulnerabilities</div><div class="chips">${b.vuln.map(a=>`<span class="chip">${esc(a)}</span>`).join('')}</div>`,{navTitle:'Bloc'}))}
 let oppSeg='all';
 function renderOpps(){const list=P.map((p,k)=>Object.assign({k},p)).filter(p=>oppSeg==='all'||st.tracked[p.k]);const n=Object.keys(st.tracked).length;
-  $('#tab-opps').innerHTML=`<div class="tabhead">Opportunities</div><div class="tabpad"><div class="segc"><button data-a="oppSeg" data-x="all" aria-pressed="${oppSeg==='all'}">Available</button><button data-a="oppSeg" data-x="tracked" aria-pressed="${oppSeg==='tracked'}">Tracked${n?' ('+n+')':''}</button></div><div style="height:10px"></div>
-  ${list.length?list.map(p=>`<div class="offer" role="button" tabindex="0" data-a="opp" data-x="${p.k}"><div class="logo" style="background:linear-gradient(135deg,hsl(${HUE(p.domain)} 50% 45%),hsl(${(HUE(p.domain)+50)%360} 55% 28%))">${esc(p.name.replace(/[^A-Za-z0-9 ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase())}</div><div class="main"><div class="t">${esc(p.name)}</div><div class="s">${esc(p.c)} \u00b7 ${esc(cap(p.domain))}</div><div class="s2">${p.prob?p.prob+'% execution odds':esc(cap(p.maturity))+' maturity'}</div></div><button class="addb${st.tracked[p.k]?' on':''}" data-a="track" data-x="${p.k}" aria-label="${st.tracked[p.k]?'Stop tracking':'Track'} ${esc(p.name)}">${st.tracked[p.k]?IC.check:IC.plus}</button></div>`).join(''):`<div class="empty"><div class="ig">i</div><h3>Nothing Tracked Yet</h3><p>Tap + on an opportunity to follow it here.</p></div>`}</div>`;
+  $('#tab-opps').innerHTML=`<div class="tabhead">Offers</div><div class="tabpad"><div class="segc"><button data-a="oppSeg" data-x="all" aria-pressed="${oppSeg==='all'}">Available</button><button data-a="oppSeg" data-x="tracked" aria-pressed="${oppSeg==='tracked'}">Added to Card${n?' ('+n+')':''}</button></div><div style="height:10px"></div>
+  ${list.length?list.map(p=>`<div class="offer" role="button" tabindex="0" data-a="opp" data-x="${p.k}"><div class="logo" style="background:linear-gradient(135deg,hsl(${HUE(p.domain)} 50% 45%),hsl(${(HUE(p.domain)+50)%360} 55% 28%))">${esc(p.name.replace(/[^A-Za-z0-9 ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase())}</div><div class="main"><div class="t">${esc(p.name)}</div><div class="s">${esc(p.c)} \u00b7 ${esc(cap(p.domain))}</div><div class="s2">${p.prob?p.prob+'% execution odds':esc(cap(p.maturity))+' maturity'}</div></div><button class="addb${st.tracked[p.k]?' on':''}" data-a="track" data-x="${p.k}" aria-label="${st.tracked[p.k]?'Remove from card':'Add to card'} ${esc(p.name)}">${st.tracked[p.k]?IC.check:IC.plus}</button></div>`).join(''):`<div class="empty"><div class="ig">i</div><h3>No Offers Added</h3><p>Tap + on an offer to add it to that country\u2019s card.</p></div>`}</div>`;
   const b=$('#obadge');b.hidden=!n;b.textContent=n}
 function renderAcct(){const wl=st.wallet.length;
   $('#tab-acct').innerHTML=`<div class="tabhead">Account</div><div class="tabpad">
   <div class="group"><div class="cell" style="padding:14px 16px"><div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#8e9aa8,#4a5563);display:grid;place-items:center;font-weight:700;font-size:19px;flex:none">WM</div><div class="main"><div class="t" style="font-size:19px;font-weight:600">World Model</div><div class="s">FINAL v3 \u00b7 data as of ${D.asOf}</div></div></div></div>
-  <div class="gh">Model</div><div class="group">${[['weights','Scenario Weights',pct(st.w).join(' / ')+'%'],['overlays','Scenario Overlays',D.overlays.length+' shocks'],['groups','Beneficiary Groups',D.groups.length+' groups'],['auto','Auto-Update','']].map(r=>`<button class="cell" data-a="${r[0]}"><div class="main"><div class="t">${r[1]}</div>${r[2]?`<div class="s">${r[2]}</div>`:''}</div>${IC.chev}</button>`).join('')}</div>
+  <div class="gh">Payments</div><div class="group">${cellRow('World Model Fund',money(fundAvail()),{a:'tab',x:'pay',dim:1,s:'Available of '+money(FUND0)})}${cellRow('AutoPay',Object.keys(st.autopay).length+' cards',{dim:1})}<button class="cell" data-a="resetPayAsk"><div class="main"><div class="t danger">Reset Payments</div></div></button></div>
+  <div class="gh">Model</div><div class="group">${[['run','Run Scenario',scenName(st.scen)],['weights','Scenario Weights',pct(st.w).join(' / ')+'%'],['overlays','Scenario Overlays',D.overlays.length+' shocks'],['groups','Beneficiary Groups',D.groups.length+' groups'],['auto','Auto-Update','']].map(r=>`<button class="cell" data-a="${r[0]}"><div class="main"><div class="t">${r[1]}</div>${r[2]?`<div class="s">${r[2]}</div>`:''}</div>${IC.chev}</button>`).join('')}</div>
   <div class="gh">Evidence</div><div class="group">${cellRow('Data Sources',D.sources.total,{a:'sources',dim:1})}${cellRow('Methodology',null,{a:'method'})}</div>
   <div class="gh">Wallet</div><div class="group">${cellRow('Countries in wallet',wl,{dim:1})}<button class="cell" data-a="resetAsk"><div class="main"><div class="t danger">Reset Wallet</div></div></button></div>
   <div class="gf">Scores are analyst models, not facts. Every number traces back to the model package.</div></div>`}
@@ -704,7 +817,7 @@ function listScreen(title,items){push(screen(title,`<div style="height:12px"></d
 let tabNow='home';
 function setTab(t){tabNow=t;$$('.tab').forEach(s=>s.classList.toggle('on',s.id==='tab-'+t));$$('.tb').forEach(b=>{const on=b.dataset.x===t;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});$('#hhead').style.display=t==='home'?'':'none';
   $$('.tab').forEach(s=>s.style.top=t==='home'&&s.id==='tab-home'?'62px':'0');
-  if(t==='blocs')renderBlocs();if(t==='opps')renderOpps();if(t==='acct')renderAcct();if(t==='home'){frame()}}
+  if(t==='pay')renderPay();if(t==='blocs')renderBlocs();if(t==='opps')renderOpps();if(t==='acct')renderAcct();if(t==='home'){frame()}}
 function goCountry(iso){closeSheet();if(modal.classList.contains('on'))closeModal();popAll();if(!st.wallet.includes(iso)){st.wallet.push(iso);save();buildRail();drawNearMedals()}setTab('home');requestAnimationFrame(()=>goto(st.wallet.indexOf(iso),false))}
 
 /* run-scenario flow */
@@ -728,28 +841,51 @@ function runDone(){const c=cur(),v=c.m?value(c):null;
 const A={
   back:()=>pop(),
   tab:(el)=>{popAll();setTab(el.dataset.x)},
-  menu:()=>{const c=cur();openSheet(`${mrow('freezeAsk',IC.freeze,st.frozen[c.i]?'Unfreeze Assumptions':'Freeze Assumptions')}${mrow('manage',IC.gear,'Manage Country')}${mrow('power',IC.bolt,'Check Scenario Power')}${mrow('auto',IC.auto,'Manage Auto-Update')}`)},
+  menu:()=>{const c=cur();openSheet(`${mrow('freezeAsk',IC.freeze,st.frozen[c.i]?'Unfreeze Card':'Freeze Card')}${mrow('manage',IC.gear,'Manage Account')}${mrow('spend',IC.bolt,'Check Spending Power')}${mrow('autopay',IC.auto,'Manage AutoPay')}`)},
   closeSheet:()=>closeSheet(),
   freezeAsk:()=>{const c=cur();if(st.frozen[c.i]){A.unfreeze();return}
-    asb.innerHTML=`<div class="confirm"><div class="cic">${IC.snow}</div><h3>Freeze ${esc(c.n)}?</h3><p>Its outlook stops moving when you change scenario weights. Unfreeze anytime from this menu.</p><button class="primary" data-a="freeze">Freeze Assumptions</button><button class="plain" data-a="closeSheet">Cancel</button></div>`},
-  freeze:()=>{const c=cur();st.frozen[c.i]={w:st.w.slice(),t:Date.now()};save();closeSheet();renderHome(false);toast(c.n+' frozen')},
-  unfreeze:()=>{const c=cur();delete st.frozen[c.i];save();closeSheet();renderHome(false);toast(c.n+' unfrozen')},
+    asb.innerHTML=`<div class="confirm"><div class="cic">${IC.snow}</div><h3>Freeze ${esc(c.n)} card?</h3><p>Payments to this card are blocked and its outlook stops moving when you change scenario weights. Unfreeze anytime from this menu.</p><button class="primary" data-a="freeze">Freeze Card</button><button class="plain" data-a="closeSheet">Cancel</button></div>`},
+  freeze:()=>{const c=cur();st.frozen[c.i]={w:st.w.slice(),t:Date.now()};save();closeSheet();renderHome(false);toast('Card frozen')},
+  unfreeze:()=>{const c=cur();delete st.frozen[c.i];save();closeSheet();renderHome(false);toast('Card unfrozen')},
   freezeToggle:(el)=>{const c=cur();if(st.frozen[c.i])delete st.frozen[c.i];else st.frozen[c.i]={w:st.w.slice(),t:Date.now()};el.setAttribute('aria-checked',!!st.frozen[c.i]);save();renderHome(false)},
   manage:()=>{closeSheet();setTimeout(manageScreen,120)},
-  power:()=>{closeSheet();setTimeout(powerScreen,120)},
-  auto:()=>{closeSheet();setTimeout(autoScreen,120)},
+  auto:()=>autoScreen(),
   autoSw:(el)=>{const k=el.dataset.x;st.auto[k]=!st.auto[k];el.setAttribute('aria-checked',st.auto[k]);save()},
-  pwPick:(el)=>{$$('[data-a=pwPick]',el.parentNode).forEach(b=>b.setAttribute('aria-checked',b===el))},
-  pwCheck:(el)=>{const scr=el.closest('.scr'),c=cur(),btn=$('[data-a=pwPick][aria-checked=true]',scr),k=+btn.dataset.x,v=c.m[k];el.innerHTML='<span class="spin"></span>';
-    setTimeout(()=>{el.textContent='Check Again';$('#pwr',scr).innerHTML=`<div class="gh">Result</div><div class="group"><div class="gauge">${gauge(v)}<div class="gv num ${cls(v)}">${sgn(v,0)}</div><div class="gl">${VERD[v]}</div><div style="color:var(--t2);font-size:14px;margin:6px 20px 16px;text-align:center;line-height:1.4">In ${esc(S[k].name)}, ${esc(c.n)} is a ${VERD[v].toLowerCase()} on a \u22123 to +3 scale.</div></div></div><div class="gh">All futures</div>${bars(c)}`;const bd=$('.scr-body',scr);bd.scrollTo({top:$('#pwr',scr).offsetTop-8,behavior:'smooth'})},700)},
+  pay:()=>openPay(st.cur),
+  payPick:()=>openSheet(`<div style="padding:14px 16px 6px;font-size:17px;font-weight:600">Pay To</div>${st.wallet.map(i=>{const c=byIso[i];return `<button class="mrow" data-a="payTo" data-x="${i}"><div class="mini" style="background-image:${tex(tier(c))}"></div><span>${esc(c.n)}</span><small class="num">${minDue(c)>0?money(minDue(c))+' due':''}</small>${IC.chev}</button>`}).join('')}`),
+  payTo:(el)=>{closeSheet();const i=el.dataset.x;setTimeout(()=>openPay(i),260)},
+  payOpt:(el)=>{pd.opt=el.dataset.x;payRefresh();if(pd.opt==='other'){const i=$('#payOther',mpages[0]);if(i)i.focus()}},
+  payDate:()=>mpush(payDatePage()),
+  payDatePick:(el)=>{const d=+el.dataset.x;pd.date=d===sod(Date.now())?Date.now():d;payRefresh();mpop()},
+  payApply:()=>mpush(payApplyPage()),
+  payApplyPick:(el)=>{pd.apply=el.dataset.x;payRefresh();mpop()},
+  payCont:()=>{if(!payErr())mpush(payPage2())},
+  paySubmit:(el)=>{const e=payErr();if(e){toast(e);return}el.disabled=true;el.innerHTML='<span class="spin"></span>';
+    setTimeout(()=>{const today=sod(pd.date)===sod(Date.now());const p=mkPay(pd.iso,payAmt(),today?Date.now():sod(pd.date),pd.apply,false);st.pays.push(p);save();refreshAfterPay();mpush(payDone(p))},1100)},
+  payFinish:()=>{closeModal();toast('Payment submitted')},
+  payment:(el)=>paymentScreen(el.dataset.x),
+  payHistory:()=>{const all=st.pays.slice().sort((a,b)=>b.date-a.date);listScreen('Payment Activity',all.length?`<div class="group">${all.map(p=>payRow(p,1)).join('')}</div>`:`<div class="empty"><div class="ig">i</div><h3>No Payments Yet</h3></div>`)},
+  payCancelAsk:(el)=>openSheet(`<div class="confirm"><h3>Cancel this payment?</h3><p>The scheduled amount goes back to the World Model Fund and the card’s available capacity.</p><button class="primary" style="background:var(--red)" data-a="payCancel" data-x="${el.dataset.x}">Cancel Payment</button><button class="plain" data-a="closeSheet">Keep Payment</button></div>`),
+  payCancel:(el)=>{const p=st.pays.find(x=>x.id===el.dataset.x);if(p)p.status='canceled';save();closeSheet();pop();refreshAfterPay();toast('Payment canceled')},
+  unfreezeIso:(el)=>{delete st.frozen[el.dataset.x];save();closeSheet();renderHome(false);toast('Card unfrozen')},
+  spend:()=>{closeSheet();setTimeout(spendScreen,120)},
+  spCheck:(el)=>{const scr=el.closest('.scr'),v=r2(parseFloat(($('#spAmt',scr).value||'').replace(/[^0-9.]/g,''))||0);if(!(v>0)){$('#spr',scr).innerHTML='<div class="gf" style="color:var(--red)">Enter an amount to check.</div>';return}
+    el.innerHTML='<span class="spin"></span>';setTimeout(()=>{el.textContent='Check';$('#spr',scr).innerHTML=spResult(cur(),v);$('.scr-body',scr).scrollTo({top:$('#spr',scr).offsetTop-8,behavior:'smooth'})},700)},
+  autopay:()=>{closeSheet();setTimeout(()=>autopayScreen(st.cur),120)},
+  autopayCur:()=>autopayScreen(st.cur),
+  apOpen:(el)=>autopayScreen(el.dataset.x),
+  apToggle:(el)=>{const scr=el.closest('.scr'),iso=scr.dataset.iso;if(st.autopay[iso]){delete st.autopay[iso];st.pays=st.pays.filter(p=>!(p.iso===iso&&p.auto&&p.status==='scheduled'));toast('AutoPay turned off')}else{st.autopay[iso]={mode:'min'};processDue();toast('AutoPay turned on')}save();fillAutopay(scr);refreshAfterPay()},
+  apMode:(el)=>{const scr=el.closest('.scr'),iso=scr.dataset.iso;st.autopay[iso].mode=el.dataset.x;st.pays=st.pays.filter(p=>!(p.iso===iso&&p.auto&&p.status==='scheduled'));processDue();save();fillAutopay(scr);refreshAfterPay()},
+  resetPayAsk:()=>openSheet(`<div class="confirm"><h3>Reset payments?</h3><p>This clears every payment and AutoPay setting and restores the ${money(FUND0)} fund.</p><button class="primary" style="background:var(--red)" data-a="resetPay">Reset Payments</button><button class="plain" data-a="closeSheet">Cancel</button></div>`),
+  resetPay:()=>{st.pays=[];st.autopay={};save();closeSheet();refreshAfterPay();toast('Payments reset')},
   statements:()=>statementsScreen(),
   seg:(el)=>segFill(el.closest('.scr'),el.dataset.x),
   project:(el)=>projectScreen(+el.dataset.x),
   scen:(el)=>scenarioScreen(el.dataset.x),
   weights:()=>weightsScreen(),
   resetw:(el)=>{st.w=PRI.slice();save();fillWeights(el.closest('.scr'));renderHome(false);toast('Weights reset')},
-  info:(el)=>{if(pop$.classList.contains('on')){closePop();return}popover(el,'Headroom is the distance between the current score and the +3 maximum. More headroom means more room to improve in the selected future.')},
-  run:()=>{pick=st.scen;openModal(runPage1())},
+  info:(el)=>{if(pop$.classList.contains('on')){closePop();return}const c=cur();popover(el,`Capacity is $50M \u00d7 (outlook + 3). Under ${scenShort(st.scen)}, ${c.n} can take ${money(capOf(c))}. ${money(deployed(c))} is deployed and ${money(scheduledFor(c))} is scheduled.`)},
+  run:()=>{closeSheet();popAll();pick=st.scen;openModal(runPage1())},
   runWith:(el)=>{pick=el.dataset.x;openModal(runPage1())},
   pick:(el)=>{pick=el.dataset.x;$$('[data-a=pick]',el.parentNode).forEach(b=>b.setAttribute('aria-checked',b===el))},
   continue:()=>mpush(runPage2()),
@@ -766,15 +902,15 @@ const A={
   bloc:(el)=>blocScreen(el.dataset.x),
   oppSeg:(el)=>{oppSeg=el.dataset.x;renderOpps()},
   track:(el,e)=>{e.stopPropagation();const k=el.dataset.x;if(st.tracked[k])delete st.tracked[k];else st.tracked[k]=1;save();const on=!!st.tracked[k];
-    if(el.closest('#tab-opps')&&oppSeg==='all'){el.classList.toggle('on',on);el.innerHTML=on?IC.check:IC.plus;const n=Object.keys(st.tracked).length,b=$('#obadge');b.hidden=!n;b.textContent=n;$('#tab-opps [data-x=tracked]').textContent='Tracked'+(n?' ('+n+')':'')}else if(el.closest('#tab-opps'))renderOpps();else{el.classList.toggle('on',on);el.innerHTML=on?IC.check:IC.plus;renderOpps()}
-    toast(on?'Tracking '+P[k].name:'Stopped tracking')},
+    if(el.closest('#tab-opps')&&oppSeg==='all'){el.classList.toggle('on',on);el.innerHTML=on?IC.check:IC.plus;const n=Object.keys(st.tracked).length,b=$('#obadge');b.hidden=!n;b.textContent=n;$('#tab-opps [data-x=tracked]').textContent='Added to Card'+(n?' ('+n+')':'')}else if(el.closest('#tab-opps'))renderOpps();else{el.classList.toggle('on',on);el.innerHTML=on?IC.check:IC.plus;renderOpps()}
+    toast(on?'Added to '+P[k].c+' card':'Removed from card')},
   opp:(el)=>projectScreen(+el.dataset.x),
   overlays:()=>listScreen('Scenario Overlays',`<div class="gf" style="padding:0 4px 10px">Shocks that can sit on top of any future, with subjective probabilities.</div><div class="group">${D.overlays.slice().sort((a,b)=>b.p-a.p).map(o=>cellRow(esc(cap(o.id.replace(/_/g,' '))),o.p+'%',{s:esc(o.d),swrap:1,wrap:1,dim:1})).join('')}</div>`),
   groups:()=>listScreen('Beneficiary Groups',`<div class="group">${D.groups.map(g=>cellRow(esc(g.n),null,{s:esc(g.d),swrap:1})).join('')}</div>`),
   sources:()=>listScreen('Data Sources',`<div class="gf" style="padding:0 4px 10px">${D.sources.total} sources in the ledger. Most cited domains:</div><div class="group">${D.sources.domains.map(d=>cellRow(esc(d[0]),d[1],{dim:1})).join('')}</div>`),
   method:()=>listScreen('Methodology',`<div class="para">The model tracks four futures at once: national power, productive capacity, median-citizen life and who owns the gains.<br><br>Each priority country gets a score from \u22123 (severe loser) to +3 (strong beneficiary) in five scenarios. The weighted outlook blends those scores using the scenario priors, which you can change under Scenario Weights.<br><br>Card finishes follow the outlook at package priors: Platinum +1.75 and up, Gold +1.00, Blue +0.40, Graphite below that. Seed countries have no research yet.<br><br>Scores are analyst models, not facts. Check sources, confidence and missing data before relying on any number.</div>`),
   resetAsk:()=>openSheet(`<div class="confirm"><h3>Reset wallet?</h3><p>This restores the 40 priority countries, package weights, and clears frozen countries, tracked items and scenario runs.</p><button class="primary" style="background:var(--red)" data-a="resetWallet">Reset</button><button class="plain" data-a="closeSheet">Cancel</button></div>`),
-  resetWallet:()=>{st={wallet:DEFAULT_WALLET.slice(),cur:DEFAULT_WALLET[0],scen:'weighted',w:PRI.slice(),frozen:{},tracked:{},auto:{sweep:true,alerts:true,twosrc:false},runs:[]};save();closeSheet();buildRail();drawNearMedals();renderAcct();renderOpps();setTab('acct');requestAnimationFrame(()=>goto(0,false));toast('Wallet reset')}
+  resetWallet:()=>{st={wallet:DEFAULT_WALLET.slice(),cur:DEFAULT_WALLET[0],scen:'weighted',w:PRI.slice(),frozen:{},tracked:{},auto:{sweep:true,alerts:true,twosrc:false},runs:[],pays:[],autopay:{}};save();closeSheet();buildRail();drawNearMedals();renderAcct();renderOpps();setTab('acct');requestAnimationFrame(()=>goto(0,false));toast('Wallet reset')}
 };
 const mrow=(a,ic,t)=>`<button class="mrow" data-a="${a}"><span class="lic">${ic}</span><span>${t}</span>${IC.chev}</button>`;
 $('#app').addEventListener('click',e=>{if(suppress)return;const el=e.target.closest('[data-a]');if(!el){closePop();return}if(el.dataset.a!=='info')closePop();const f=A[el.dataset.a];if(f){f(el,e)}});
