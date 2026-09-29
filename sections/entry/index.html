@@ -369,7 +369,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border:0;border-radiu
             <div class="p-big num" id="pBig"></div>
             <button class="p-dots" data-a="menu" aria-label="Card actions"><svg viewBox="0 0 18 18"><circle cx="3" cy="9" r="1.7"/><circle cx="9" cy="9" r="1.7"/><circle cx="15" cy="9" r="1.7"/></svg></button>
             <div class="p-line num" id="pLine"></div>
-            <div class="p-row"><span>Available Capacity<button class="info" data-a="info" aria-label="About available capacity">i</button></span><b class="num" id="pHead"></b></div>
+            <div class="p-row"><span>Available Credit<button class="info" data-a="info" aria-label="About available credit">i</button></span><b class="num" id="pHead"></b></div>
             <div class="p-row"><span id="pOutL">Outlook</span><b class="num" id="pOut"></b></div>
             <div class="p-sep"></div>
             <button class="p-link" data-a="statements">Statements and Activity</button>
@@ -441,7 +441,7 @@ IC.okmark='<svg class="okmark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="
 const weightedW=(c,w)=>{let t=0,s=0;for(let k=0;k<S.length;k++){t+=w[k]*c.m[k];s+=w[k]}return s?t/s:0};
 const base=c=>c.m?weightedW(c,PRI):null;
 const DEFAULT_WALLET=C.filter(c=>c.m).sort((a,b)=>base(b)-base(a)).map(c=>c.i);
-const KEY='wm-wallet-v2';
+const KEY='wm-wallet-v3';
 let st={wallet:DEFAULT_WALLET.slice(),cur:DEFAULT_WALLET[0],scen:'weighted',w:PRI.slice(),frozen:{},tracked:{},auto:{sweep:true,alerts:true,twosrc:false},runs:[],pays:[],autopay:{}};
 try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&Array.isArray(s.wallet)){st=Object.assign(st,s);st.wallet=st.wallet.filter(i=>byIso[i]);if(!st.wallet.length)st.wallet=DEFAULT_WALLET.slice();if(!byIso[st.cur])st.cur=st.wallet[0]}}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
@@ -591,7 +591,7 @@ function goto(k,smooth){k=Math.max(0,Math.min(slots.length-1,k));rail.scrollTo({
 rail.addEventListener('click',e=>{const s=e.target.closest('.slot');if(!s)return;if(+s.dataset.k!==curK){goto(+s.dataset.k,true);return}flip(s)});
 function fillBack(s){const c=byIso[st.wallet[+s.dataset.k]],b=D.blocs.find(x=>x.core.includes(c.n))||D.blocs.find(x=>x.bridge.includes(c.n));
   $('.b-sig',s).textContent=c.n;$('.b-cvv',s).textContent=c.i;
-  $('.b-txt',s).innerHTML=`<b>Capacity</b> ${money(capOf(c))} \u00b7 <b>Deployed</b> ${money(deployed(c))}<br><b>Outlook</b> ${c.m?sgn(value(c)):'not scored'} \u00b7 ${esc(scenShort(st.scen))}<br><b>Region</b> ${esc(c.r)}${b?'<br><span class="b-one"><b>Bloc</b> '+esc(b.name)+'</span>':''}`}
+  $('.b-txt',s).innerHTML=`<b>Limit</b> ${money(FUND0)} \u00b7 <b>Deployed</b> ${money(deployed(c))}<br><b>Outlook</b> ${c.m?sgn(value(c)):'not scored'} \u00b7 ${esc(scenShort(st.scen))}<br><b>Region</b> ${esc(c.r)}${b?'<br><span class="b-one"><b>Bloc</b> '+esc(b.name)+'</span>':''}`}
 function flip(s,to){const on=to!=null?to:s.style.getPropertyValue('--f')!=='1';if(on)fillBack(s);s.classList.add('flipping');s.style.setProperty('--f',on?'1':'0');clearTimeout(s._ft);s._ft=setTimeout(()=>s.classList.remove('flipping'),700)}
 rail.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){goto(curK+1,true);e.preventDefault()}if(e.key==='ArrowLeft'){goto(curK-1,true);e.preventDefault()}});
 
@@ -701,7 +701,7 @@ const pct=w=>{const t=w.reduce((a,b)=>a+b,0)||1;return w.map(v=>Math.round(v/t*1
 
 function manageScreen(){const c=cur(),t=tier(c);const blocs=D.blocs.filter(b=>b.core.includes(c.n)||b.bridge.includes(c.n));
   push(screen('Manage Account',`<div style="display:flex;gap:14px;align-items:center;padding:20px 4px 4px"><div class="mini" style="width:74px;height:47px;border-radius:5px;background-image:${tex(t)}"></div><div><div style="font-size:20px;font-weight:700">${esc(c.n)}</div><div style="color:var(--t2);font-size:14px;margin-top:2px">${TIERNAME[t]} \u00b7 \u2022\u2022\u2022\u2022${c.i}</div></div></div>
-  <div class="gh">Account</div><div class="group">${cellRow('Capacity',money(capOf(c)),{dim:1,s:'Under '+esc(scenShort(st.scen))})}${cellRow('Capital deployed',money(deployed(c)),{dim:1})}${cellRow('Statements and Activity',null,{a:'statements'})}${cellRow('Manage AutoPay',st.autopay[c.i]?'On':'Off',{a:'autopayCur',dim:1})}${cellRow('Run Scenario',esc(scenShort(st.scen)),{a:'run',dim:1})}</div>
+  <div class="gh">Account</div><div class="group">${cellRow('Credit limit',money(FUND0),{dim:1,s:'Shared across all cards'})}${cellRow('Capital deployed',money(deployed(c)),{dim:1})}${cellRow('Statements and Activity',null,{a:'statements'})}${cellRow('Manage AutoPay',st.autopay[c.i]?'On':'Off',{a:'autopayCur',dim:1})}${cellRow('Run Scenario',esc(scenShort(st.scen)),{a:'run',dim:1})}</div>
   <div class="gh">Details</div><div class="group">${cellRow('Region',esc(c.r),{dim:1})}${cellRow('ISO code',c.i,{dim:1})}${cellRow('Card tier',TIERNAME[t],{dim:1,s:TIERDESC[t]})}${c.m?cellRow('Scenario range',`${sgn(Math.min(...c.m),0)} to ${sgn(Math.max(...c.m),0)}`,{dim:1}):''}</div>
   ${c.t?`<div class="gh">Base-case thesis</div><div class="para">${esc(c.t)}</div>`:''}
   <div class="gh">Influence blocs</div><div class="group">${blocs.length?blocs.map(b=>cellRow(esc(b.name),null,{s:b.core.includes(c.n)?'Core member':'Bridge node',a:'bloc',x:b.id,wrap:1})).join(''):cellRow('No bloc membership recorded',null)}</div>
@@ -712,20 +712,20 @@ function weightsScreen(){const el=screen('Scenario Weights',`<div class="gf" sty
 function fillWeights(el){const p=pct(st.w);$('#wl',el).innerHTML=S.map((s,k)=>`<div class="gh" style="display:flex;justify-content:space-between"><span>${esc(s.short)}</span><span class="num" id="wp${k}">${p[k]}%</span></div><div class="group"><div class="cell" style="display:block;padding:6px 16px 8px"><input type="range" id="w${k}" min="0" max="60" step="1" value="${st.w[k]}" data-k="${k}" aria-label="${esc(s.name)} weight" style="--p:${st.w[k]/60*100}%"><div class="s" style="white-space:normal">${esc(s.desc)}</div></div></div>`).join('');
   $$('input[type=range]',el).forEach(r=>r.addEventListener('input',()=>{const k=+r.dataset.k;st.w[k]=+r.value;r.style.setProperty('--p',(r.value/60*100)+'%');const q=pct(st.w);S.forEach((_,j)=>{const o=$('#wp'+j,el);if(o)o.textContent=q[j]+'%'});save();renderHome(false)}))}
 /* ---------------- payments: a simulated capital fund, never real money ---------------- */
-const FUND0=5000,r2=v=>Math.round(v*100)/100;
-const money=v=>'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'M';
+const FUND0=2800,r2=v=>Math.round(v*100)/100;
+const money=v=>'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})+'';
 const sod=t=>{const d=new Date(t);d.setHours(0,0,0,0);return d.getTime()};
 const addDays=(t,n)=>{const d=new Date(t);d.setDate(d.getDate()+n);return sod(d)};
 const fmtD=t=>new Date(t).toLocaleDateString('en-US',{month:'short',day:'numeric'});
 const fmtDL=t=>new Date(t).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
 function dueDate(){const n=new Date(),d=new Date(n.getFullYear(),n.getMonth(),16);if(n.getDate()>16)d.setMonth(d.getMonth()+1);return d.getTime()}
 function cycleStart(){const d=new Date(dueDate());d.setMonth(d.getMonth()-1);d.setDate(17);return d.getTime()}
-function capOf(c){const v=value(c);return r2(50*((v==null?0:v)+3))}
+function capOf(c){return FUND0}
 const sumP=a=>r2(a.reduce((t,p)=>t+p.amt,0));
 const livePays=()=>st.pays.filter(p=>p.status!=='canceled');
 const deployed=c=>sumP(st.pays.filter(p=>p.iso===c.i&&p.status==='posted'));
 const scheduledFor=c=>sumP(st.pays.filter(p=>p.iso===c.i&&p.status==='scheduled'));
-const avail=c=>Math.max(0,r2(capOf(c)-deployed(c)-scheduledFor(c)));
+const avail=c=>fundAvail();
 const fundAvail=()=>Math.max(0,r2(FUND0-sumP(livePays())));
 function minDue(c){const m=r2(capOf(c)*.02),paid=sumP(livePays().filter(p=>p.iso===c.i&&p.date>=cycleStart()));return Math.max(0,Math.min(r2(m-paid),avail(c)))}
 const confNo=()=>'WM'+Math.random().toString(36).slice(2,6).toUpperCase()+Math.random().toString(36).slice(2,6).toUpperCase();
@@ -752,8 +752,8 @@ function payErr(){const c=byIso[pd.iso],a=payAmt();if(!(a>0))return pd.opt==='ot
 function payPage1(){const c=byIso[pd.iso];
   const opt=(k,t,v)=>`<button class="cell" role="radio" aria-checked="${pd.opt===k}" data-a="payOpt" data-x="${k}"><span class="radio"></span><div class="main"><div class="t">${t}</div></div><div class="v num">${v}</div></button>`;
   return `<div class="mnav"><button data-a="cancel">Cancel</button><h2>Make Payment</h2><span></span></div><div class="mbody">
-  <div class="gh">Pay to</div><div class="group"><div class="cell"><div class="mini" style="background-image:${tex(tier(c))}"></div><div class="main"><div class="t">${esc(c.n)}</div><div class="s">••••${c.i} · Capacity ${money(capOf(c))}</div></div></div></div>
-  <div class="gh">Amount</div><div class="group">${opt('min','Minimum Due',money(minDue(c)))}${opt('avail','Remaining Capacity',money(avail(c)))}${opt('other','Other Amount','')}${pd.opt==='other'?`<div class="cell"><span style="font-size:28px;font-weight:700">$</span><input id="payOther" class="bigin" style="font-size:28px" inputmode="decimal" autocomplete="off" placeholder="0.00" value="${esc(pd.other)}" aria-label="Amount in millions"><span style="color:var(--t2);font-size:16px">million</span></div>`:''}</div>
+  <div class="gh">Pay to</div><div class="group"><div class="cell"><div class="mini" style="background-image:${tex(tier(c))}"></div><div class="main"><div class="t">${esc(c.n)}</div><div class="s">••••${c.i} · Limit ${money(FUND0)}</div></div></div></div>
+  <div class="gh">Amount</div><div class="group">${opt('min','Minimum Due',money(minDue(c)))}${opt('avail','Remaining Capacity',money(avail(c)))}${opt('other','Other Amount','')}${pd.opt==='other'?`<div class="cell"><span style="font-size:28px;font-weight:700">$</span><input id="payOther" class="bigin" style="font-size:28px" inputmode="decimal" autocomplete="off" placeholder="0.00" value="${esc(pd.other)}" aria-label="Amount in dollars"></div>`:''}</div>
   <div class="gf" id="payErr" style="color:var(--red)"></div>
   <div class="gh">Pay from</div><div class="group"><div class="cell">${FUNDIC}<div class="main"><div class="t">World Model Fund</div><div class="s">••••2026 · Available ${money(fundAvail())}</div></div></div></div>
   <div class="gh">Payment date</div><div class="group"><button class="cell" data-a="payDate"><div class="main"><div class="t">${sod(pd.date)===sod(Date.now())?'Today':fmtDL(pd.date)}</div>${sod(pd.date)===sod(dueDate())?'<div class="s">Due date</div>':''}</div><div class="v dim">${fmtD(pd.date)}</div>${IC.chev}</button></div>
@@ -784,13 +784,13 @@ function paymentScreen(id){const p=st.pays.find(x=>x.id===id);if(!p)return;const
   ${p.status==='scheduled'?`<div class="group" style="margin-top:28px"><button class="cell" data-a="payCancelAsk" data-x="${p.id}" style="justify-content:center"><div class="t danger">Cancel Payment</div></button></div>`:''}`,{navTitle:'Payment Details'}))}
 function spendScreen(){const c=cur();
   push(screen('Check Spending Power',`<div style="padding:22px 4px 4px"><div style="font-size:24px;font-weight:700;letter-spacing:-.01em">Check Spending Power</div><div style="color:var(--t2);font-size:15px;margin-top:6px;line-height:1.4">Enter an amount to see whether ${esc(c.n)} can take it. Checking does not change your capacity.</div></div>
-  <div class="group" style="margin-top:16px"><div class="cell" style="padding:16px"><span style="font-size:34px;font-weight:700">$</span><input id="spAmt" class="bigin" style="font-size:34px" inputmode="decimal" autocomplete="off" placeholder="0.00" aria-label="Amount in millions"><span style="color:var(--t2);font-size:16px">million</span></div></div>
+  <div class="group" style="margin-top:16px"><div class="cell" style="padding:16px"><span style="font-size:34px;font-weight:700">$</span><input id="spAmt" class="bigin" style="font-size:34px" inputmode="decimal" autocomplete="off" placeholder="0.00" aria-label="Amount in dollars"></div></div>
   <div style="margin-top:18px"><button class="primary" data-a="spCheck">Check</button></div><div id="spr"></div>`,{navTitle:'Spending Power'}))}
 function spResult(c,amt){const av=avail(c),ok=amt<=av,col=ok?'var(--green)':'var(--red)';
   return `<div class="group" style="margin-top:22px"><div style="text-align:center;padding:24px 18px 20px"><svg class="resic" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" style="stroke:${col}"/><path d="${ok?'M20 33l8 8 17-18':'M23 23l18 18M41 23 23 41'}" style="stroke:${col}"/></svg>
   <div style="font-size:21px;font-weight:700">${ok?'Likely Approved':'Likely Declined'}</div>
-  <div style="color:var(--t2);font-size:15px;margin-top:6px;line-height:1.4">${ok?`${money(amt)} fits within ${esc(c.n)}’s available capacity of ${money(av)} under ${esc(scenShort(st.scen))}.`:`${money(amt)} is ${money(amt-av)} over ${esc(c.n)}’s available capacity of ${money(av)} under ${esc(scenShort(st.scen))}.`}</div></div></div>
-  <div class="gh">In each future</div><div class="group">${S.map((s,k)=>{const a=Math.max(0,r2(50*((c.m?c.m[k]:0)+3)-deployed(c)-scheduledFor(c))),y=amt<=a;return cellRow(esc(s.short),`<span class="${y?'pos':'neg'}">${y?'Approved':'Declined'}</span>`,{s:'Capacity '+money(a)})}).join('')}</div>`}
+  <div style="color:var(--t2);font-size:15px;margin-top:6px;line-height:1.4">${ok?`${money(amt)} fits within the ${money(av)} available on your ${money(FUND0)} limit.`:`${money(amt)} is ${money(amt-av)} over the ${money(av)} available on your ${money(FUND0)} limit.`}</div></div></div>
+  <div class="gf">All cards share one ${money(FUND0)} limit. Checking does not use any of it.</div>`}
 function autopayScreen(iso){const el=screen('Manage AutoPay','',{navTitle:'AutoPay'});el.dataset.iso=iso||st.cur;push(el);fillAutopay(el)}
 function fillAutopay(el){const c=byIso[el.dataset.iso],ap=st.autopay[c.i],sched=st.pays.find(p=>p.iso===c.i&&p.auto&&p.status==='scheduled');
   $('.scr-body',el).innerHTML=`<div style="display:flex;gap:14px;align-items:center;padding:20px 4px 4px"><div class="mini" style="width:64px;height:40px;background-image:${tex(tier(c))}"></div><div><div style="font-size:20px;font-weight:700">${esc(c.n)}</div><div style="color:var(--t2);font-size:14px;margin-top:2px">••••${c.i}</div></div></div>
@@ -802,7 +802,7 @@ function fillAutopay(el){const c=byIso[el.dataset.iso],ap=st.autopay[c.i],sched=
   <div class="gf">To skip one month, open the scheduled payment and cancel it.</div>`:''}`}
 function renderPay(){processDue();const all=st.pays.slice().sort((a,b)=>b.date-a.date),sch=all.filter(p=>p.status==='scheduled').reverse(),hist=all.filter(p=>p.status!=='scheduled'),aps=Object.keys(st.autopay).filter(i=>byIso[i]);
   $('#tab-pay').innerHTML=`<div class="tabhead">Payments</div><div class="tabpad">
-  <section class="panel"><div class="p-lbl">World Model Fund</div><div class="p-big num">${money(fundAvail())}</div><div class="p-line">Available of ${money(FUND0)} starting fund</div>
+  <section class="panel"><div class="p-lbl">World Model Fund</div><div class="p-big num">${money(fundAvail())}</div><div class="p-line">Available of ${money(FUND0)} limit</div>
   <div class="p-row"><span>Deployed</span><b class="num">${money(sumP(all.filter(p=>p.status==='posted')))}</b></div><div class="p-row"><span>Scheduled</span><b class="num">${money(sumP(sch))}</b></div><div class="p-sep"></div><button class="p-link" data-a="payHistory">Payment Activity</button></section>
   <button class="paybtn" data-a="payPick"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.3"/><path d="M15.2 8.6c-.5-.9-1.6-1.4-3.1-1.4-1.8 0-3 .9-3 2.2 0 3.2 6.3 1.5 6.3 4.8 0 1.4-1.3 2.3-3.2 2.3-1.6 0-2.8-.6-3.3-1.6M12 5.2v13.6"/></svg><span>Make a Payment</span></button>
   ${insightsCard()}
@@ -822,7 +822,7 @@ function monthBars(){const now=new Date(),ms=[];for(let i=5;i>=0;i--){const d=ne
   return `<svg viewBox="0 0 ${W} ${H+44}" class="mbars" role="img" aria-label="Deployed capital by month">${[0,.5,1].map(f=>`<line x1="0" x2="${W}" y1="${(16+H*(1-f)).toFixed(1)}" y2="${(16+H*(1-f)).toFixed(1)}" stroke="#2c2c2e"/>`).join('')}${ms.map((b,i)=>{const h=b.v/mx*H,x=gap/2+i*(bw+gap);return `<rect x="${x.toFixed(1)}" y="${(16+H-h).toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="5" fill="${i===5?'#4c9bf5':'#2f5f96'}"/><text x="${(x+bw/2).toFixed(1)}" y="${H+36}" text-anchor="middle" fill="${i===5?'#fff':'#98989f'}" font-size="11">${b.l}</text>${b.v?`<text x="${(x+bw/2).toFixed(1)}" y="${(16+H-h-5).toFixed(1)}" text-anchor="middle" fill="#e5e5ea" font-size="9.5">${Math.round(b.v)}</text>`:''}`}).join('')}</svg>`}
 function insightsCard(){const bc=byCountry(),total=r2(bc.reduce((t,x)=>t+x[1],0));if(!total)return '';
   const top=bc.slice(0,5).map(([i,v])=>({n:byIso[i].n,v})),rest=r2(total-top.reduce((t,x)=>t+x.v,0));if(rest>0)top.push({n:'Other',v:rest});
-  return `<div class="sec-h"><h3>Insights</h3><button data-a="insights">See All</button></div><div class="group" style="padding:16px"><div style="display:flex;gap:16px;align-items:center">${donut(top,total)}<div class="legend">${top.map((p,i)=>`<div><i style="background:${PALC[i]}"></i><span>${esc(p.n)}</span><b class="num">${Math.round(p.v/total*100)}%</b></div>`).join('')}</div></div><div class="gh" style="padding:18px 0 4px">Deployed by month, $M</div>${monthBars()}</div>`}
+  return `<div class="sec-h"><h3>Insights</h3><button data-a="insights">See All</button></div><div class="group" style="padding:16px"><div style="display:flex;gap:16px;align-items:center">${donut(top,total)}<div class="legend">${top.map((p,i)=>`<div><i style="background:${PALC[i]}"></i><span>${esc(p.n)}</span><b class="num">${Math.round(p.v/total*100)}%</b></div>`).join('')}</div></div><div class="gh" style="padding:18px 0 4px">Deployed by month</div>${monthBars()}</div>`}
 function insightsScreen(){const bc=byCountry(),total=r2(bc.reduce((t,x)=>t+x[1],0));const bl={};bc.forEach(([i,v])=>{const n=blocOf(byIso[i].n);bl[n]=r2((bl[n]||0)+v)});const blocs=Object.entries(bl).sort((a,b)=>b[1]-a[1]);
   const rows=(list,col)=>list.map(([n,v],i)=>`<div class="cell" style="display:block"><div style="display:flex;justify-content:space-between;gap:10px"><span class="t" style="white-space:normal">${esc(n)}</span><span class="num" style="color:var(--t2);flex:none">${money(v)} · ${Math.round(v/total*100)}%</span></div><div class="hbar"><i style="width:${(v/list[0][1]*100).toFixed(1)}%;background:${col(i)}"></i></div></div>`).join('');
   push(screen('Insights',total?`<div class="hero"><div class="amt num">${money(total)}</div><div class="when">Deployed across ${bc.length} countr${bc.length===1?'y':'ies'} · ${money(fundAvail())} left in the fund</div></div>
@@ -900,7 +900,7 @@ function renderOpps(){const list=P.map((p,k)=>Object.assign({k},p)).filter(p=>op
 function renderAcct(){const wl=st.wallet.length;
   $('#tab-acct').innerHTML=`<div class="tabhead">Account</div><div class="tabpad">
   <div class="group"><div class="cell" style="padding:14px 16px"><div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#8e9aa8,#4a5563);display:grid;place-items:center;font-weight:700;font-size:19px;flex:none">WM</div><div class="main"><div class="t" style="font-size:19px;font-weight:600">World Model</div><div class="s">FINAL v3 \u00b7 data as of ${D.asOf}</div></div></div></div>
-  <div class="gh">Payments</div><div class="group">${cellRow('World Model Fund',money(fundAvail()),{a:'tab',x:'pay',dim:1,s:'Available of '+money(FUND0)})}${cellRow('AutoPay',Object.keys(st.autopay).length+' cards',{dim:1})}<button class="cell" data-a="resetPayAsk"><div class="main"><div class="t danger">Reset Payments</div></div></button></div>
+  <div class="gh">Payments</div><div class="group">${cellRow('World Model Fund',money(fundAvail()),{a:'tab',x:'pay',dim:1,s:'Available of '+money(FUND0)+' limit'})}${cellRow('AutoPay',Object.keys(st.autopay).length+' cards',{dim:1})}<button class="cell" data-a="resetPayAsk"><div class="main"><div class="t danger">Reset Payments</div></div></button></div>
   <div class="gh">Model</div><div class="group">${[['run','Run Scenario',scenName(st.scen)],['weights','Scenario Weights',pct(st.w).join(' / ')+'%'],['overlays','Scenario Overlays',D.overlays.length+' shocks'],['groups','Beneficiary Groups',D.groups.length+' groups'],['auto','Auto-Update','']].map(r=>`<button class="cell" data-a="${r[0]}"><div class="main"><div class="t">${r[1]}</div>${r[2]?`<div class="s">${r[2]}</div>`:''}</div>${IC.chev}</button>`).join('')}</div>
   <div class="gh">Evidence</div><div class="group">${cellRow('Data Sources',D.sources.total,{a:'sources',dim:1})}${cellRow('Methodology',null,{a:'method'})}</div>
   <div class="gh">Wallet</div><div class="group">${cellRow('Countries in wallet',wl,{dim:1})}<button class="cell" data-a="resetAsk"><div class="main"><div class="t danger">Reset Wallet</div></div></button></div>
@@ -971,7 +971,7 @@ const A={
   apOpen:(el)=>autopayScreen(el.dataset.x),
   apToggle:(el)=>{const scr=el.closest('.scr'),iso=scr.dataset.iso;if(st.autopay[iso]){delete st.autopay[iso];st.pays=st.pays.filter(p=>!(p.iso===iso&&p.auto&&p.status==='scheduled'));toast('AutoPay turned off')}else{st.autopay[iso]={mode:'min'};processDue();toast('AutoPay turned on')}save();fillAutopay(scr);refreshAfterPay()},
   apMode:(el)=>{const scr=el.closest('.scr'),iso=scr.dataset.iso;st.autopay[iso].mode=el.dataset.x;st.pays=st.pays.filter(p=>!(p.iso===iso&&p.auto&&p.status==='scheduled'));processDue();save();fillAutopay(scr);refreshAfterPay()},
-  resetPayAsk:()=>openSheet(`<div class="confirm"><h3>Reset payments?</h3><p>This clears every payment and AutoPay setting and restores the ${money(FUND0)} fund.</p><button class="primary" style="background:var(--red)" data-a="resetPay">Reset Payments</button><button class="plain" data-a="closeSheet">Cancel</button></div>`),
+  resetPayAsk:()=>openSheet(`<div class="confirm"><h3>Reset payments?</h3><p>This clears every payment and AutoPay setting and restores the full ${money(FUND0)} limit.</p><button class="primary" style="background:var(--red)" data-a="resetPay">Reset Payments</button><button class="plain" data-a="closeSheet">Cancel</button></div>`),
   resetPay:()=>{st.pays=[];st.autopay={};save();closeSheet();refreshAfterPay();toast('Payments reset')},
   statements:()=>statementsScreen(),
   seg:(el)=>segFill(el.closest('.scr'),el.dataset.x),
@@ -979,7 +979,7 @@ const A={
   scen:(el)=>scenarioScreen(el.dataset.x),
   weights:()=>weightsScreen(),
   resetw:(el)=>{st.w=PRI.slice();save();fillWeights(el.closest('.scr'));renderHome(false);toast('Weights reset')},
-  info:(el)=>{if(pop$.classList.contains('on')){closePop();return}const c=cur();popover(el,`Capacity is $50M \u00d7 (outlook + 3). Under ${scenShort(st.scen)}, ${c.n} can take ${money(capOf(c))}. ${money(deployed(c))} is deployed and ${money(scheduledFor(c))} is scheduled.`)},
+  info:(el)=>{if(pop$.classList.contains('on')){closePop();return}const c=cur();popover(el,`All cards share one ${money(FUND0)} limit. ${money(fundAvail())} is available. ${c.n} has ${money(deployed(c))} deployed and ${money(scheduledFor(c))} scheduled.`)},
   run:()=>{closeSheet();popAll();pick=st.scen;openModal(runPage1())},
   runWith:(el)=>{pick=el.dataset.x;openModal(runPage1())},
   pick:(el)=>{pick=el.dataset.x;$$('[data-a=pick]',el.parentNode).forEach(b=>b.setAttribute('aria-checked',b===el))},
@@ -1014,9 +1014,7 @@ document.addEventListener('touchstart',()=>{},{passive:true});
 $('#app').addEventListener('scroll',e=>{e.currentTarget.scrollTop=0;e.currentTarget.scrollLeft=0});
 
 /* ---------------- boot ---------------- */
-if(!st.seeded&&!st.pays.length){const now=new Date();
-  DEFAULT_WALLET.slice(0,6).forEach((iso,j)=>{const c=byIso[iso];[3,2,1].forEach((m,q)=>{const d=new Date(now.getFullYear(),now.getMonth()-m,16,12);const p=mkPay(iso,r2(capOf(c)*[.05,.035,.03][q]*(1-j*.08)),d.getTime(),'Example history',j<2);st.pays.push(p)})});
-  st.autopay[DEFAULT_WALLET[0]]={mode:'min'};st.autopay[DEFAULT_WALLET[1]]={mode:'min'};st.seeded=true;save()}
+
 processDue();
 function unlock(skip){const e=$('#entry'),f=$('#enFace');if(!e||e.classList.contains('out')||e._busy)return;e._busy=1;
   const done=()=>{e.classList.add('out');try{sessionStorage.setItem('wm-unlocked','1')}catch(x){}setTimeout(()=>e.remove(),650)};
